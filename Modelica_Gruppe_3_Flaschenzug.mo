@@ -9,8 +9,8 @@ package Modelica_Gruppe_3_Flaschenzug
   end Decke;
 
   connector Port_F_s
-    Real s "Weg in [m]";
-    flow Real F "Kraft in [N]";
+    Real s(unit="m") "Weg in [m]";
+    flow Real F(unit="N") "Kraft in [N]";
     annotation(
       Icon(graphics = {Rectangle(fillColor = {0, 0, 144}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {2, 1}, extent = {{-32, 15}, {32, -15}}, textString = "F<->s")}));
   end Port_F_s;
@@ -62,19 +62,37 @@ package Modelica_Gruppe_3_Flaschenzug
       Icon(graphics = {Rectangle(origin = {1, -1}, fillColor = {198, 159, 3}, fillPattern = FillPattern.Forward, extent = {{-5, 77}, {3, -75}})}));end Seil;
 
   connector Port_Electric
-    Real u "Spannung in [V]";
-    flow Real i "elektrischer Strom [A]";
+    Real u(unit="V") "Spannung in [V]";
+    flow Real i(unit="A") "elektrischer Strom [A]";
     annotation(
-      Diagram(graphics = {Rectangle(fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-80, 80}, {80, -80}}), Text(origin = {-1, 1}, extent = {{-73, 47}, {73, -47}}, textString = "Port_Electrical")}));
+      Icon(graphics = {Rectangle(fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-80, 80}, {80, -80}}), Text(origin = {-1, 1}, extent = {{-73, 47}, {73, -47}}, textString = "Port_Electrical")}));
   end Port_Electric;
 
   model Steckdose
+  
+  constant Real PI = Modelica.Constants.pi;
+  constant Real U_max(unit="V") = 325.2691; //Spitzenspannung 325V bei 230V Effektiv
+  
   Port_Electric port_Steckdose annotation(
       Placement(visible = true, transformation(origin = {0, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
 
+  port_Steckdose.u = U_max*sin(2*PI*50*time); //Effektive Spannung 230V
+  
+  
   annotation(
       Icon(graphics = {Rectangle(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Rectangle(extent = {{-60, 60}, {60, -60}}), Ellipse(extent = {{-40, 40}, {40, -40}}, endAngle = 360), Ellipse(origin = {-19, -1}, fillPattern = FillPattern.Solid, extent = {{-5, 5}, {5, -5}}, endAngle = 360), Ellipse(origin = {1, -1}, extent = {{-5, 5}, {5, -5}}, endAngle = 360), Ellipse(origin = {21, -1}, fillPattern = FillPattern.Solid, extent = {{-5, 5}, {5, -5}}, endAngle = 360), Line(origin = {-37, 12}, points = {{-3, -8}, {3, -8}, {3, 8}, {3, 8}}), Line(origin = {-37, -12}, points = {{-3, 8}, {3, 8}, {3, -8}}), Line(origin = {37, 12}, points = {{3, -8}, {-3, -8}, {-3, 8}}), Line(origin = {37, -14}, points = {{3, 8}, {-3, 8}, {-3, -8}}), Rectangle(origin = {0, 35}, fillColor = {149, 99, 0}, fillPattern = FillPattern.Solid, extent = {{-4, 5}, {4, -5}}),  Rectangle(origin = {0, -35}, fillColor = {149, 99, 0}, fillPattern = FillPattern.Solid, extent = {{-4, 5}, {4, -5}})}));end Steckdose;
+
+  model E_Motor
+  
+  
+  equation
+
+  
+  
+  
+  
+  end E_Motor;
   annotation(
     uses(Modelica(version = "3.2.2")));
 end Modelica_Gruppe_3_Flaschenzug;
