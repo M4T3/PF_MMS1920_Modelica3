@@ -35,9 +35,9 @@ package Modelica_Gruppe_3_Flaschenzug
       Placement(visible = true, transformation(origin = {2, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, -12}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
     constant Real g = 9.81 "Erdbeschleunigung in [m/s²]";
     parameter Real m = 1 "Masse in [kg]";
-  Real s(unit = "m");
-  Real v(unit = "m/s");
-  Real a(unit = "m/s/s");
+    Real s(unit = "m");
+    Real v(unit = "m/s");
+    Real a(unit = "m/s/s");
   equation
     a = der(v);
     v = der(s);
@@ -89,37 +89,6 @@ package Modelica_Gruppe_3_Flaschenzug
     annotation(
       Icon(graphics = {Rectangle(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Rectangle(extent = {{-60, 60}, {60, -60}}), Ellipse(extent = {{-40, 40}, {40, -40}}, endAngle = 360), Ellipse(origin = {-19, -1}, fillPattern = FillPattern.Solid, extent = {{-5, 5}, {5, -5}}, endAngle = 360), Ellipse(origin = {1, -1}, extent = {{-5, 5}, {5, -5}}, endAngle = 360), Ellipse(origin = {21, -1}, fillPattern = FillPattern.Solid, extent = {{-5, 5}, {5, -5}}, endAngle = 360), Line(origin = {-37, 12}, points = {{-3, -8}, {3, -8}, {3, 8}, {3, 8}}), Line(origin = {-37, -12}, points = {{-3, 8}, {3, 8}, {3, -8}}), Line(origin = {37, 12}, points = {{3, -8}, {-3, -8}, {-3, 8}}), Line(origin = {37, -14}, points = {{3, 8}, {-3, 8}, {-3, -8}}), Rectangle(origin = {0, 35}, fillColor = {149, 99, 0}, fillPattern = FillPattern.Solid, extent = {{-4, 5}, {4, -5}}), Rectangle(origin = {0, -35}, fillColor = {149, 99, 0}, fillPattern = FillPattern.Solid, extent = {{-4, 5}, {4, -5}})}));
   end Steckdose;
-
-  model E_Motor
-    Real test;
-  equation
-    test = spule1.L;
-  end E_Motor;
-
-  model Spule
-    Port_Electric port_Spule_I annotation(
-      Placement(visible = true, transformation(origin = {-90, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Port_Electric port_Spule_O annotation(
-      Placement(visible = true, transformation(origin = {92, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {92, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    //Konstanten
-    constant Real PI = Modelica.Constants.pi;
-    //mechanische Parameter
-    parameter Real l(unit = "m") = 20;
-    parameter Real d(unit = "m") = 0.002;
-    parameter Integer n(unit = "1") = 50;
-    parameter Real A(unit = "m2");
-    //elektrische Parameter
-    parameter Real rho(unit = "Ohm.m") = 1.72e-2;
-    parameter Real R(unit = "Ohm");
-    //Variable Größen
-    Real L(unit = "H");
-  equation
-    A = PI * d * d / 4;
-    R = rho * l / A;
-    L = port_Spule_I.u / der(port_Spule_I.i);
-    annotation(
-      Icon(graphics = {Line(origin = {-64, 0}, points = {{-24, 0}, {24, 0}, {24, 0}}, thickness = 0.75), Rectangle(fillPattern = FillPattern.Solid, extent = {{-40, 20}, {40, -20}}), Line(origin = {66, 0}, points = {{-26, 0}, {26, 0}}, thickness = 0.75), Text(origin = {1, 2}, lineColor = {255, 255, 255}, extent = {{-31, 16}, {31, -16}}, textString = "Spule")}, coordinateSystem(initialScale = 0.1)));
-  end Spule;
 
   model GM_Reihenschluss
     Port_Electric port_E_Motor_I annotation(
@@ -226,13 +195,13 @@ package Modelica_Gruppe_3_Flaschenzug
   end Flaschenzug_mit_Motor;
 
   model Einfaches_Modell
-  Modelica_Gruppe_3_Flaschenzug.Decke decke1 annotation(
+    Modelica_Gruppe_3_Flaschenzug.Decke decke1 annotation(
       Placement(visible = true, transformation(origin = {-1, 147}, extent = {{-67, -67}, {67, 67}}, rotation = 0)));
-  Modelica_Gruppe_3_Flaschenzug.Masse masse1 annotation(
+    Modelica_Gruppe_3_Flaschenzug.Masse masse1 annotation(
       Placement(visible = true, transformation(origin = {64, -4}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica_Gruppe_3_Flaschenzug.Rolle rolle1 annotation(
+    Modelica_Gruppe_3_Flaschenzug.Rolle rolle1 annotation(
       Placement(visible = true, transformation(origin = {1, 49}, extent = {{-27, -27}, {27, 27}}, rotation = 0)));
-  Modelica_Gruppe_3_Flaschenzug.Hand hand1 annotation(
+    Modelica_Gruppe_3_Flaschenzug.Hand hand1 annotation(
       Placement(visible = true, transformation(origin = {-63, -1}, extent = {{-21, -21}, {21, 21}}, rotation = 0)));
   equation
     connect(rolle1.port_Seil_input, hand1.Zug_Hand_F_s) annotation(
@@ -242,6 +211,94 @@ package Modelica_Gruppe_3_Flaschenzug
     connect(decke1.Aufhaengung, rolle1.Lager_Rolle_1) annotation(
       Line(points = {{-2, 82}, {0, 82}, {0, 50}, {0, 50}}));
   end Einfaches_Modell;
+
+  model GM_Nebenschluss
+    Port_Electric port_Electric_Anker annotation(
+      Placement(visible = true, transformation(origin = {-58, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-58, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Port_Electric port_Electric_Erreger annotation(
+      Placement(visible = true, transformation(origin = {-58, -24}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Port_Mechanic_rot port_Mechanic annotation(
+      Placement(visible = true, transformation(origin = {58, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    //---------------------------
+    //Port Variablen
+    Real u_a(unit = "V");
+    Real u_fw(unit = "V");
+    Real i_a(unit = "A");
+    Real i_fw(unit = "A");
+    Real alpha(unit = "rad");
+    //---------------------------
+    //Parameter elektrisch
+    parameter Real U_b(unit = "V") = 0;
+    parameter Real R_a(unit = "Ohm") = 0.04;
+    parameter Real R_aV(unit = "Ohm") = 1;
+    parameter Real R_fw(unit = "Ohm") = 17;
+    parameter Real R_fwV(unit = "Ohm") = 1;
+    parameter Real L_a(unit = "H") = 400e-6;
+    parameter Real L_fw(unit = "H") = 7.5;
+    //---------------------------
+    //Variablen elektrisch
+    Real k_e(unit = "V.s");
+    Real k_t(unit = "N.m/A");
+    //---------------------------
+    //Parameter mechanisch
+    parameter Real J(unit = "kg.m2") = 10e-3;
+    //---------------------------
+    //Variablen mechanisch
+    Real omega(unit = "rad/s");
+    Real n(unit = "1/s");
+    Real M_l(unit = "N.m");
+    Real M_e(unit = "N.m");
+    //---------------------------
+    //Konstanten
+    constant Real PI = Modelica.Constants.pi;
+  equation
+    k_e = 1 / (1 + exp(-0.28 * i_fw)) - 0.5 + 0.004 * i_fw;
+    k_t = k_e / (2 * PI);
+    omega = der(alpha);
+    n = 2 * PI * omega;
+    alpha = port_Mechanic.alpha;
+    i_a = port_Electric_Anker.i;
+    u_a = port_Electric_Anker.u;
+    i_fw = port_Electric_Erreger.i;
+    u_fw = port_Electric_Erreger.u;
+    M_l = port_Mechanic.M;
+    u_a = 2 * U_b + (R_a + R_aV) * i_a + L_a * der(i_a) + k_e * n;
+    u_fw = (R_fw + R_fwV) * i_fw + L_fw * der(i_fw);
+    J * der(omega) = M_e - M_l;
+    M_e = k_t * i_a;
+    annotation(
+      Icon(graphics = {Rectangle(fillColor = {144, 144, 144}, fillPattern = FillPattern.Solid, extent = {{-60, 40}, {60, -40}})}));
+  end GM_Nebenschluss;
+
+  model Test_Motor
+    Modelica_Gruppe_3_Flaschenzug.GM_Nebenschluss gM_Nebenschluss1 annotation(
+      Placement(visible = true, transformation(origin = {-36, -58}, extent = {{-34, -34}, {34, 34}}, rotation = 0)));
+    Modelica_Gruppe_3_Flaschenzug.Steckdose steckdose_Anker(U_s = 42) annotation(
+      Placement(visible = true, transformation(origin = {-100, -48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica_Gruppe_3_Flaschenzug.Steckdose steckdose_Erreger(U_s = 30) annotation(
+      Placement(visible = true, transformation(origin = {-100, -72}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica_Gruppe_3_Flaschenzug.Last_rotatorisch last_rotatorisch1 annotation(
+      Placement(visible = true, transformation(origin = {51, -59}, extent = {{-33, -33}, {33, 33}}, rotation = 0)));
+  equation
+    connect(last_rotatorisch1.port_Mechanic_Last, gM_Nebenschluss1.port_Mechanic) annotation(
+      Line(points = {{52, -59}, {-16, -59}, {-16, -58}}));
+    connect(steckdose_Anker.port_Steckdose, gM_Nebenschluss1.port_Electric_Anker) annotation(
+      Line(points = {{-100, -48}, {-56, -48}, {-56, -50}, {-56, -50}}));
+    connect(steckdose_Erreger.port_Steckdose, gM_Nebenschluss1.port_Electric_Erreger) annotation(
+      Line(points = {{-100, -72}, {-58, -72}, {-58, -64}, {-56, -64}}));
+  end Test_Motor;
+
+  model Last_rotatorisch
+    Modelica_Gruppe_3_Flaschenzug.Port_Mechanic_rot port_Mechanic_Last annotation(
+      Placement(visible = true, transformation(origin = {6, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {2, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  equation
+    if time < 5 then
+      port_Mechanic_Last.M = 0;
+    else
+      port_Mechanic_Last.M = -0.2;
+    end if;
+    annotation(
+      Icon(graphics = {Ellipse(fillColor = {185, 5, 5}, fillPattern = FillPattern.Solid, lineThickness = 0.75, extent = {{-60, 60}, {60, -60}}, endAngle = 360)}));end Last_rotatorisch;
   annotation(
     uses(Modelica(version = "3.2.2")));
 end Modelica_Gruppe_3_Flaschenzug;
