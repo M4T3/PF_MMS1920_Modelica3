@@ -1,7 +1,7 @@
 package Modelica_Gruppe_3_Flaschenzug
   model Decke
     Modelica_Gruppe_3_Flaschenzug.Port_F_s Aufhaengung annotation(
-      Placement(visible = true, transformation(origin = {0, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0,-2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {0, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     Aufhaengung.s = 0;
     annotation(
@@ -25,21 +25,21 @@ package Modelica_Gruppe_3_Flaschenzug
     Port_F_s port_Seil_output annotation(
       Placement(visible = true, transformation(origin = {62, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {62, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
-  port_Seil_input.s + port_Seil_output.s = 2 * Lager_Rolle_1.s;
+  port_Seil_input.s + port_Seil_output.s = 2  * Lager_Rolle_1.s;
   port_Seil_input.F + port_Seil_output.F = -Lager_Rolle_1.F;
-    port_Seil_input.F = port_Seil_output.F;
+  port_Seil_input.F = port_Seil_output.F;
     annotation(
       Icon(graphics = {Ellipse(fillColor = {202, 202, 202}, fillPattern = FillPattern.Solid, extent = {{-60, 60}, {60, -60}}, endAngle = 360), Ellipse(origin = {6, -6}, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {6, -6}}, endAngle = 360)}, coordinateSystem(extent = {{-70, -70}, {70, 70}})),
       Diagram(coordinateSystem(extent = {{-70, -70}, {70, 70}})),
       __OpenModelica_commandLineOptions = "",
-  experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
+      experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
   end Rolle;
 
   model Masse
     Modelica_Gruppe_3_Flaschenzug.Port_F_s port_Masse annotation(
       Placement(visible = true, transformation(origin = {2, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, -12}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-    constant Real g = 9.81 "Erdbeschleunigung in [m/s²]";
-    parameter Real m= 1;
+    constant Real g = -10 "Erdbeschleunigung in [m/s²]";
+    parameter Real m = 1;
     Real s(unit = "m");
     Real v(unit = "m/s");
     Real a(unit = "m/s/s");
@@ -47,7 +47,7 @@ package Modelica_Gruppe_3_Flaschenzug
     a = der(v);
     v = der(s);
     s = port_Masse.s;
-    port_Masse.F = m * a - m * g;
+    port_Masse.F = (-m * a) + m * g;
     annotation(
       Icon(graphics = {Polygon(origin = {0, -50}, fillPattern = FillPattern.Solid, points = {{-60, -30}, {60, -30}, {20, 30}, {-20, 30}, {-60, -30}}), Text(origin = {5, -55}, lineColor = {255, 255, 255}, extent = {{-35, 13}, {35, -13}}, textString = "Masse")}, coordinateSystem(extent = {{-60, -80}, {60, 0}})),
       Diagram(coordinateSystem(extent = {{-60, -80}, {60, 0}})),
@@ -58,12 +58,12 @@ package Modelica_Gruppe_3_Flaschenzug
     Modelica_Gruppe_3_Flaschenzug.Port_F_s Zug_Hand_F_s annotation(
       Placement(visible = true, transformation(origin = {8, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {6, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
-    Zug_Hand_F_s.F = -9;
+    Zug_Hand_F_s.F = -2;
     annotation(
       Icon(graphics = {Ellipse(origin = {10, -20}, fillColor = {255, 170, 127}, fillPattern = FillPattern.Solid, extent = {{-44, 22}, {38, -4}}, endAngle = 360), Ellipse(origin = {-30, 21}, fillColor = {255, 170, 127}, fillPattern = FillPattern.Solid, extent = {{10, -25}, {-4, 31}}, endAngle = 360), Ellipse(origin = {-4, 27}, fillColor = {255, 170, 127}, fillPattern = FillPattern.Solid, extent = {{10, -25}, {-4, 31}}, endAngle = 360), Ellipse(origin = {14, 27}, fillColor = {255, 170, 127}, fillPattern = FillPattern.Solid, extent = {{10, -25}, {-4, 31}}, endAngle = 360), Ellipse(origin = {32, 23}, fillColor = {255, 170, 127}, fillPattern = FillPattern.Solid, extent = {{10, -25}, {-4, 31}}, endAngle = 360)}, coordinateSystem(extent = {{-50, -40}, {50, 60}})),
       Diagram(coordinateSystem(extent = {{-50, -40}, {50, 60}})),
       __OpenModelica_commandLineOptions = "",
-  experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
+      experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
   end Hand;
 
   model Seil
@@ -164,37 +164,44 @@ package Modelica_Gruppe_3_Flaschenzug
       __OpenModelica_commandLineOptions = "");
   end Seilwinde;
 
-  model Flaschenzug_mit_Motor
-  Modelica_Gruppe_3_Flaschenzug.Decke decke1 annotation(
-      Placement(visible = true, transformation(origin = {7, 81.8}, extent = {{-81, -16.2}, {81, 16.2}}, rotation = 0)));
-  Modelica_Gruppe_3_Flaschenzug.Rolle rolle1 annotation(
-      Placement(visible = true, transformation(origin = {8, 40}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
-  Modelica_Gruppe_3_Flaschenzug.Masse masse1 annotation(
-      Placement(visible = true, transformation(origin = {39.6855, -3.75273}, extent = {{-19.6855, -26.2473}, {19.6855, 0}}, rotation = 0)));
-  Modelica_Gruppe_3_Flaschenzug.Hand hand1 annotation(
-      Placement(visible = true, transformation(origin = {-43.43, -43.484}, extent = {{-19.57, -15.656}, {19.57, 23.484}}, rotation = 0)));
-  equation
-    connect(masse1.port_Masse, rolle1.port_Seil_output) annotation(
-      Line(points = {{40, -16}, {22, -16}, {22, 40}, {22, 40}}));
-    connect(rolle1.port_Seil_input, hand1.Zug_Hand_F_s) annotation(
-      Line(points = {{-4, 40}, {-42, 40}, {-42, -44}, {-42, -44}}));
-    connect(decke1.Aufhaengung, rolle1.Lager_Rolle_1) annotation(
-      Line(points = {{6, 80}, {8, 80}, {8, 40}, {8, 40}}));
-    annotation(
-      experiment(StartTime = 0, StopTime = 10, Tolerance = 1e-6, Interval = 0.0001),
-      Diagram);end Flaschenzug_mit_Motor;
-
   model Einfaches_Modell
-    Modelica_Gruppe_3_Flaschenzug.Decke decke1 annotation(
-      Placement(visible = true, transformation(origin = {-1, 79}, extent = {{-67, -67}, {67, 67}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Decke decke1 annotation(
+      Placement(visible = true, transformation(origin = {1, 85}, extent = {{-105, -21}, {105, 21}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle2 annotation(
+      Placement(visible = true, transformation(origin = {49, 61}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
   Modelica_Gruppe_3_Flaschenzug.Seil seil1 annotation(
-      Placement(visible = true, transformation(origin = {0, 46}, extent = {{-3, -30}, {3, 30}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {1.1, 39}, extent = {{-2.1, -21}, {2.1, 21}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle1 annotation(
+      Placement(visible = true, transformation(origin = {14, 6}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil2 annotation(
+      Placement(visible = true, transformation(origin = {35.1, 29}, extent = {{-2.1, -21}, {2.1, 21}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil3 annotation(
+      Placement(visible = true, transformation(origin = {63, 30}, extent = {{-2, -20}, {2, 20}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Hand hand1 annotation(
+      Placement(visible = true, transformation(origin = {57.8239, -39.7887}, extent = {{-14.8239, -11.8591}, {14.8239, 17.7887}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Masse masse1 annotation(
+      Placement(visible = true, transformation(origin = {13.8601, -18}, extent = {{-17.8601, -23.8135}, {17.8601, 0}}, rotation = 0)));
   equation
-
+    connect(masse1.port_Masse, rolle1.Lager_Rolle_1) annotation(
+      Line(points = {{14, -30}, {14, -30}, {14, 6}, {14, 6}}));
+    connect(hand1.Zug_Hand_F_s, seil3.Seil_unten) annotation(
+      Line(points = {{60, -40}, {62, -40}, {62, 14}, {64, 14}}));
+    connect(rolle2.port_Seil_output, seil3.Seil_oben) annotation(
+      Line(points = {{64, 62}, {62, 62}, {62, 46}, {64, 46}}));
+    connect(rolle2.Lager_Rolle_1, decke1.Aufhaengung) annotation(
+      Line(points = {{48, 62}, {4, 62}, {4, 82}, {2, 82}}));
+  connect(seil2.Seil_unten, rolle1.port_Seil_output) annotation(
+      Line(points = {{35, 12}, {31.5, 12}, {31.5, 6}, {28, 6}}));
+  connect(rolle2.port_Seil_input, seil2.Seil_oben) annotation(
+      Line(points = {{35, 61}, {34, 61}, {34, 46}, {35, 46}}));
+    connect(seil1.Seil_oben, decke1.Aufhaengung) annotation(
+      Line(points = {{2, 56}, {0, 56}, {0, 82}, {2, 82}}));
+    connect(rolle1.port_Seil_input, seil1.Seil_unten) annotation(
+      Line(points = {{2, 6}, {0, 6}, {0, 22}, {2, 22}}));
   end Einfaches_Modell;
 
   model GM_Nebenschluss
-    Port_Electric port_Electric_Anker annotation(
+  Port_Electric port_Electric_Anker annotation(
       Placement(visible = true, transformation(origin = {-58, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-58, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Port_Electric port_Electric_Erreger annotation(
       Placement(visible = true, transformation(origin = {-58, -24}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -226,7 +233,7 @@ package Modelica_Gruppe_3_Flaschenzug
     //---------------------------
     //Variablen mechanisch
     Real omega(unit = "rad/s");
-    Real n(unit = "1/s");
+    Real n(unit = "1/sbhubhkj", start = 0);
     Real M_l(unit = "N.m");
     Real M_e(unit = "N.m");
     //---------------------------
@@ -263,11 +270,11 @@ package Modelica_Gruppe_3_Flaschenzug
     Modelica_Gruppe_3_Flaschenzug.Last_rotatorisch last_rotatorisch1 annotation(
       Placement(visible = true, transformation(origin = {67, 1}, extent = {{-33, -33}, {33, 33}}, rotation = 0)));
   equation
-  connect(steckdose_Anker.port_Steckdose, gM_Nebenschluss1.port_Electric_Anker) annotation(
+    connect(steckdose_Anker.port_Steckdose, gM_Nebenschluss1.port_Electric_Anker) annotation(
       Line(points = {{-82, 14}, {-58, 14}, {-58, 13.8}, {-36, 13.8}, {-36, 9.8}}));
-  connect(last_rotatorisch1.port_Mechanic_Last, gM_Nebenschluss1.port_Mechanic) annotation(
+    connect(last_rotatorisch1.port_Mechanic_Last, gM_Nebenschluss1.port_Mechanic) annotation(
       Line(points = {{68, 1}, {3.94274, 1}, {3.94274, 1.5}, {1.94274, 1.5}, {1.94274, 2}}));
-  connect(steckdose_Erreger.port_Steckdose, gM_Nebenschluss1.port_Electric_Erreger) annotation(
+    connect(steckdose_Erreger.port_Steckdose, gM_Nebenschluss1.port_Electric_Erreger) annotation(
       Line(points = {{-80, -12.2}, {-59, -12.2}, {-59, -10.2}, {-38, -10.2}, {-38, -2.2}, {-37, -2.2}, {-37, -4.2}, {-36, -4.2}}));
   end Test_Motor;
 
@@ -285,6 +292,102 @@ package Modelica_Gruppe_3_Flaschenzug
       Diagram(coordinateSystem(extent = {{-70, -70}, {70, 70}})),
       __OpenModelica_commandLineOptions = "");
   end Last_rotatorisch;
+
+  model Flaschenzug_obenrum
+  Modelica_Gruppe_3_Flaschenzug.Decke decke1 annotation(
+      Placement(visible = true, transformation(origin = {-4, 82.8}, extent = {{-86, -17.2}, {86, 17.2}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle1 annotation(
+      Placement(visible = true, transformation(origin = {13, 3}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil1 annotation(
+      Placement(visible = true, transformation(origin = {-6, 40}, extent = {{-3, -30}, {3, 30}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil2 annotation(
+      Placement(visible = true, transformation(origin = {36.2, 42}, extent = {{2.8, -28}, {-2.8, 28}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Masse masse1 annotation(
+      Placement(visible = true, transformation(origin = {14.7287, -22}, extent = {{-22.7287, -30.3049}, {22.7287, 0}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle2 annotation(
+      Placement(visible = true, transformation(origin = {48, 64}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil3 annotation(
+      Placement(visible = true, transformation(origin = { 56, 32}, extent = {{-3, -30}, {3, 30}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle3 annotation(
+      Placement(visible = true, transformation(origin = {80, -8}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil4 annotation(
+      Placement(visible = true, transformation(origin = {96, 30}, extent = {{-3, -30}, {3, 30}}, rotation = 0)));
+  Hand hand1 annotation(
+      Placement(visible = true, transformation(origin = {114, 74}, extent = {{-5, -4}, {5, 6}}, rotation = 0)));
+  equation
+    connect(hand1.Zug_Hand_F_s, seil4.Seil_oben) annotation(
+      Line(points = {{114, 72}, {96, 72}, {96, 54}, {96, 54}}));
+    connect(seil4.Seil_unten, rolle3.port_Seil_output) annotation(
+      Line(points = {{96, 6}, {96, -8}, {92, -8}}));
+  connect(rolle3.Lager_Rolle_1, masse1.port_Masse) annotation(
+      Line(points = {{80, -8}, {80, -38}, {14, -38}}));
+  connect(seil3.Seil_unten, rolle3.port_Seil_input) annotation(
+      Line(points = {{56, 8}, {69, 8}, {69, -8}}));
+    connect(rolle2.port_Seil_output, seil3.Seil_oben) annotation(
+      Line(points = {{54, 64}, {56, 64}, {56, 56}, {56, 56}}));
+    connect(seil2.Seil_oben, rolle2.port_Seil_input) annotation(
+      Line(points = {{36, 64}, {42, 64}, {42, 64}, {42, 64}}));
+    connect(rolle2.Lager_Rolle_1, decke1.Aufhaengung) annotation(
+      Line(points = {{48, 64}, {48, 82}, {-4, 82}}));
+    connect(masse1.port_Masse, rolle1.Lager_Rolle_1) annotation(
+      Line(points = {{14, -38}, {12, -38}, {12, 4}, {12, 4}}));
+    connect(rolle1.port_Seil_output, seil2.Seil_unten) annotation(
+      Line(points = {{30, 4}, {36, 4}, {36, 20}, {36, 20}}));
+    connect(seil1.Seil_unten, rolle1.port_Seil_input) annotation(
+      Line(points = {{-6, 16}, {-4, 16}, {-4, 4}, {-4, 4}}));
+    connect(seil1.Seil_oben, decke1.Aufhaengung) annotation(
+      Line(points = {{-6, 64}, {-4, 64}, {-4, 82}, {-4, 82}}));
+  end Flaschenzug_obenrum;
+
+  model Potenzflaschenzug
+  Modelica_Gruppe_3_Flaschenzug.Decke decke1 annotation(
+      Placement(visible = true, transformation(origin = {5, 80.2}, extent = {{-79, -15.8}, {79, 15.8}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle1 annotation(
+      Placement(visible = true, transformation(origin = {-28, 46}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle2 annotation(
+      Placement(visible = true, transformation(origin = {-8, 34}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Rolle rolle3 annotation(
+      Placement(visible = true, transformation(origin = {8, 6}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
+  Hand hand1 annotation(
+      Placement(visible = true, transformation(origin = {-48, 22}, extent = {{-5, -4}, {5, 6}}, rotation = 0)));
+  Masse masse1 annotation(
+      Placement(visible = true, transformation(origin = {4, -26}, extent = {{-6, -8}, {6, 0}}, rotation = 0)));
+  Seil seil1 annotation(
+      Placement(visible = true, transformation(origin = {-40, 42}, extent = {{-1, -10}, {1, 10}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil2 annotation(
+      Placement(visible = true, transformation(origin = {-16, 46}, extent = {{-1, -10}, {1, 10}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Seil seil3 annotation(
+      Placement(visible = true, transformation(origin = {0, 50}, extent = {{-1, -10}, {1, 10}}, rotation = 0)));
+  Seil seil4 annotation(
+      Placement(visible = true, transformation(origin = {-4, 14}, extent = {{-1, -10}, {1, 10}}, rotation = 0)));
+  Seil seil5 annotation(
+      Placement(visible = true, transformation(origin = {16, 22}, extent = {{-1, -10}, {1, 10}}, rotation = 0)));
+  equation
+    connect(seil3.Seil_oben, decke1.Aufhaengung) annotation(
+      Line(points = {{0, 58}, {4, 58}, {4, 78}, {6, 78}}));
+    connect(rolle2.port_Seil_output, seil3.Seil_unten) annotation(
+      Line(points = {{-2, 34}, {-2, 37}, {0, 37}, {0, 42}}));
+    connect(seil2.Seil_oben, rolle1.port_Seil_output) annotation(
+      Line(points = {{-16, 54}, {-18, 54}, {-18, 46}, {-22, 46}}));
+    connect(rolle2.port_Seil_input, seil2.Seil_unten) annotation(
+      Line(points = {{-14, 34}, {-14, 37}, {-16, 37}, {-16, 38}}));
+  connect(rolle1.Lager_Rolle_1, decke1.Aufhaengung) annotation(
+      Line(points = {{-28, 46}, {-28, 59}, {6, 59}, {6, 78}}));
+  connect(rolle1.port_Seil_input, seil1.Seil_oben) annotation(
+      Line(points = {{-34, 46}, {-34, 63}, {-40, 63}, {-40, 50}}));
+    connect(seil5.Seil_oben, decke1.Aufhaengung) annotation(
+      Line(points = {{16, 30}, {6, 30}, {6, 78}, {6, 78}}));
+    connect(seil1.Seil_unten, hand1.Zug_Hand_F_s) annotation(
+      Line(points = {{-40, 34}, {-48, 34}, {-48, 20}, {-48, 20}}));
+    connect(seil4.Seil_oben, rolle2.Lager_Rolle_1) annotation(
+      Line(points = {{-4, 22}, {-8, 22}, {-8, 34}, {-8, 34}}));
+    connect(rolle3.port_Seil_output, seil5.Seil_unten) annotation(
+      Line(points = {{14, 6}, {16, 6}, {16, 14}, {16, 14}}));
+    connect(rolle3.port_Seil_input, seil4.Seil_unten) annotation(
+      Line(points = {{2, 6}, {-4, 6}, {-4, 6}, {-4, 6}}));
+    connect(masse1.port_Masse, rolle3.Lager_Rolle_1) annotation(
+      Line(points = {{4, -28}, {8, -28}, {8, 6}, {8, 6}}));
+  end Potenzflaschenzug;
   annotation(
     uses(Modelica(version = "3.2.2")));
 end Modelica_Gruppe_3_Flaschenzug;
