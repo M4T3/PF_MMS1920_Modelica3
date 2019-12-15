@@ -3710,13 +3710,15 @@ des Getriebes parametriert werden. Der Standardwert des Wirkungsgrads ist 1
         Placement(visible = true, transformation(origin = {47.1154, -81.0705}, extent = {{-19.1154, -15.9295}, {31.859, 19.1154}}, rotation = 0)));
       Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Getriebe getriebe1 annotation(
         Placement(visible = true, transformation(origin = {1.77636e-15, -82}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-      Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.GM_Nebenschluss gM_Nebenschluss1(Br = 0.1, J = 5e-3, R_a = 0.04, R_aV = 1, R_fw = 17, R_fwV = 1, n(fixed = false, start = 0)) annotation(
-        Placement(visible = true, transformation(origin = {-75.596, -80.5985}, extent = {{-26.1313, -19.5985}, {45.7298, 19.5985}}, rotation = 0)));
       Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Motorsteuerung motorsteuerung1(S0 = 0,S1 = 1, S2 = 0, S3 = 2, S4 = 0) annotation(
-        Placement(visible = true, transformation(origin = {-50, -32}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
+        Placement(visible = true, transformation(origin = {-48, -34}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Fremderregte_Gleichstrommaschine fremderregte_Gleichstrommaschine1(Br = 0.1)  annotation(
+        Placement(visible = true, transformation(origin = {-81.995, -81.0038}, extent = {{-24.005, -18.0038}, {42.0088, 18.0038}}, rotation = 0)));
     equation
-      connect(motorsteuerung1.MS_Vorgaben, gM_Nebenschluss1.MS_Vorgaben) annotation(
-        Line(points = {{-29, -7}, {-80, -7}, {-80, -66}, {-82, -66}}));
+      connect(motorsteuerung1.MS_Vorgaben, fremderregte_Gleichstrommaschine1.MS_Vorgaben) annotation(
+        Line(points = {{-28, -8}, {-86, -8}, {-86, -68}, {-88, -68}}));
+      connect(fremderregte_Gleichstrommaschine1.GM_Wellenende, getriebe1.Getriebe_Input) annotation(
+        Line(points = {{-43, -81}, {-20, -81}, {-20, -88}}));
       connect(seil1.Seil_oben, decke1.port_Decke) annotation(
         Line(points = {{-12, 54}, {-12, 54}, {-12, 76}, {-8, 76}}));
       connect(decke1.port_Decke, rolle2.Rolle_Lagerung) annotation(
@@ -3733,8 +3735,6 @@ des Getriebes parametriert werden. Der Standardwert des Wirkungsgrads ist 1
         Line(points = {{68, -64}, {68, -29}, {66, -29}, {66, 6}}));
       connect(rolle2.Rolle_linkes_Seil, seil2.Seil_oben) annotation(
         Line(points = {{30, 54}, {22, 54}}));
-      connect(gM_Nebenschluss1.GM_Wellenende, getriebe1.Getriebe_Input) annotation(
-        Line(points = {{-34, -80}, {-20, -80}, {-20, -88}, {-20, -88}}));
       connect(seilwinde1.Seilwinde_rotatorisch, getriebe1.Getriebe_Output) annotation(
         Line(points = {{36, -80}, {20, -80}, {20, -76}, {20, -76}}));
       annotation(
@@ -3743,7 +3743,8 @@ des Getriebes parametriert werden. Der Standardwert des Wirkungsgrads ist 1
   Documentation(info = "<html><head></head><body><b><font size=\"6\">Der Faktorenflaschenzug</font></b><div><br></div><div>Der Faktorenflaschenzug stellt die Grundform des Flaschnezugs dar. Dieser setzt sich aus Seilen, Rollen und hier im Beispiel aus der Antriebseinheit welche wiederrum aus einem Motor, einem Getriebe, einer Seilwinde und einer Motorsteuerung besteht.</div><div><br></div><div>Diese Beispielmodell besteht aus:</div><div><ul><li>Einer Decke</li><li>Einer festen Rolle</li><li>Einer losen Rolle</li><li>Drei Seilen</li><li>Einer Masse</li><li>Dem Antriebsstrang mit Motorsteuerung</li></ul>Das zu erwartende Ergebnis für das Kräfteverhältnis ist aufgrund der Anzahl der tragenden Seile 1:2, sprich es ist lediglich die halbe Kraft nötig, um die aus der Masse resultierende Gewichtskraft Richtung Decke zu bewegen. (Vgl Gleichung)</div><div><br></div><div style=\"text-align: center;\"><font size=\"4\"><b>F<sub>z</sub> = <sup>F<sub>l</sub></sup> / <sub>n</sub> = <sup>m · g</sup> / <sub>n</sub></b></font></div><div><font size=\"4\"><br></font></div><div><font size=\"4\">Das zu erwartende Ergebnis für das Wegeverhätnis beträgt 2:1, sprich der Motor muss den zweifachen Weg der Masse zurücklegen.</font></div><div><font size=\"4\"><br></font></div><div style=\"text-align: center;\"><font size=\"4\"><b>s = n · h</b></font></div>
 
 
-<div style=\"text-align: center;\"><br></div></body></html>"));
+<div style=\"text-align: center;\"><br></div></body></html>"),
+  experiment(StartTime = 0, StopTime = 25, Tolerance = 1e-6, Interval = 0.005));
     end Faktorenflaschenzug;
 
     model Potenzflaschenzug
@@ -3771,15 +3772,15 @@ des Getriebes parametriert werden. Der Standardwert des Wirkungsgrads ist 1
         Placement(visible = true, transformation(origin = {-7.8616, 3.28304}, extent = {{-16.717, -13.9308}, {27.8616, 16.717}}, rotation = 0)));
       Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Getriebe getriebe1 annotation(
         Placement(visible = true, transformation(origin = {-39, 1}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
-      Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.GM_Nebenschluss gM_Nebenschluss1(Br = 0.05) annotation(
-        Placement(visible = true, transformation(origin = {-91.3333, 2}, extent = {{-14.6667, -11}, {25.6667, 11}}, rotation = 0)));
       Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Motorsteuerung motorsteuerung1 annotation(
         Placement(visible = true, transformation(origin = {-61.8266, 37.7687}, extent = {{-18.1734, -24.2313}, {15.1445, 24.2313}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Fremderregte_Gleichstrommaschine fremderregte_Gleichstrommaschine1(Br = 0.1)  annotation(
+        Placement(visible = true, transformation(origin = {-84.9151, -2.3137}, extent = {{-15.0849, -11.3137}, {26.3986, 11.3137}}, rotation = 0)));
     equation
-      connect(motorsteuerung1.MS_Vorgaben, gM_Nebenschluss1.MS_Vorgaben) annotation(
-        Line(points = {{-52, 58}, {-52, 72}, {-96, 72}, {-96, 10}}));
-      connect(gM_Nebenschluss1.GM_Wellenende, getriebe1.Getriebe_Input) annotation(
-        Line(points = {{-68, 2}, {-52, 2}, {-52, -2}, {-52, -2}}));
+      connect(motorsteuerung1.MS_Vorgaben, fremderregte_Gleichstrommaschine1.MS_Vorgaben) annotation(
+        Line(points = {{-52, 58}, {-88, 58}, {-88, 6}, {-88, 6}}));
+      connect(getriebe1.Getriebe_Input, fremderregte_Gleichstrommaschine1.GM_Wellenende) annotation(
+        Line(points = {{-52, -2}, {-60, -2}, {-60, -2}, {-62, -2}}));
       connect(getriebe1.Getriebe_Output, seilwinde1.Seilwinde_rotatorisch) annotation(
         Line(points = {{-26, 4}, {-18, 4}, {-18, 4}, {-18, 4}}));
       connect(seil3.Seil_unten, seilwinde1.Seilwinde_translatorisch) annotation(
@@ -3808,7 +3809,8 @@ des Getriebes parametriert werden. Der Standardwert des Wirkungsgrads ist 1
         Line(points = {{52, 60}, {44, 60}, {44, 86}, {44, 86}}));
       annotation(
         Icon(graphics = {Ellipse(fillColor = {120, 120, 120}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-80, 80}, {80, -80}}, endAngle = 360), Polygon(origin = {10, -2}, fillColor = {22, 98, 16}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{-46, 50}, {-46, -50}, {46, 0}, {-46, 50}})}),
-        Documentation(info = "<html><head></head><body><font size=\"6\"><b>Der Potenzflaschenzug</b></font><div><br></div><div>Diese Beispiel besteht aus:</div><div><ul><li>Einer Decke</li><li>Einer festen Rolle</li><li>Zwei losen Rollen</li><li>Fünf Seilen</li><li>Einer Masse</li><li>Antriebsstrang mit Motorsteuerung</li></ul>Bei dem Potenzflaschenzug wird die Krafteinsparung ausschließlich durch die Anzahl der losen Rollen erzielt. Gemäß der Formel</div><div><br></div><div style=\"text-align: center;\"><font size=\"4\"><b>F<sub>z</sub> = <sup>Fl</sup> /&nbsp;<sub>2<sup>n</sup></sub></b></font></div><div style=\"text-align: center;\"><sup><br></sup></div><div style=\"text-align: left;\">ist das zu erwartende Ergebnis für das Kräfteverhältnis 1:4, srpich das aufzubringende Moment des Motors entspricht 1/4 der Gewichtskraft der Masse.</div><div style=\"text-align: left;\">Das zu erwartende Wegeverhätnis beträgt 4:1 (vgl Formel),</div><div style=\"text-align: left;\"><br></div><div style=\"text-align: center;\"><font size=\"4\"><b>s = h · 2<sup>n</sup></b></font></div><div style=\"text-align: center;\"><sup><br></sup></div><div style=\"text-align: left;\">&nbsp;sprich die Masse wird lediglich um 1/4 der Strecke Richtung Decke bewegt.</div></body></html>"));
+        Documentation(info = "<html><head></head><body><font size=\"6\"><b>Der Potenzflaschenzug</b></font><div><br></div><div>Diese Beispiel besteht aus:</div><div><ul><li>Einer Decke</li><li>Einer festen Rolle</li><li>Zwei losen Rollen</li><li>Fünf Seilen</li><li>Einer Masse</li><li>Antriebsstrang mit Motorsteuerung</li></ul>Bei dem Potenzflaschenzug wird die Krafteinsparung ausschließlich durch die Anzahl der losen Rollen erzielt. Gemäß der Formel</div><div><br></div><div style=\"text-align: center;\"><font size=\"4\"><b>F<sub>z</sub> = <sup>Fl</sup> /&nbsp;<sub>2<sup>n</sup></sub></b></font></div><div style=\"text-align: center;\"><sup><br></sup></div><div style=\"text-align: left;\">ist das zu erwartende Ergebnis für das Kräfteverhältnis 1:4, srpich das aufzubringende Moment des Motors entspricht 1/4 der Gewichtskraft der Masse.</div><div style=\"text-align: left;\">Das zu erwartende Wegeverhätnis beträgt 4:1 (vgl Formel),</div><div style=\"text-align: left;\"><br></div><div style=\"text-align: center;\"><font size=\"4\"><b>s = h · 2<sup>n</sup></b></font></div><div style=\"text-align: center;\"><sup><br></sup></div><div style=\"text-align: left;\">&nbsp;sprich die Masse wird lediglich um 1/4 der Strecke Richtung Decke bewegt.</div></body></html>"),
+  experiment(StartTime = 0, StopTime = 25, Tolerance = 1e-6, Interval = 0.005));
     end Potenzflaschenzug;
 
     model Faktorenflaschenzug_Zugrichtung_oben
@@ -3834,23 +3836,23 @@ des Getriebes parametriert werden. Der Standardwert des Wirkungsgrads ist 1
         Placement(visible = true, transformation(origin = {35.9987, 32.0013}, extent = {{29.9979, 17.9987}, {-17.9987, -14.9989}}, rotation = 0)));
       Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Getriebe getriebe1(i = 6) annotation(
         Placement(visible = true, transformation(origin = {77, 29}, extent = {{17, -17}, {-17, 17}}, rotation = 0)));
-      Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.GM_Nebenschluss gM_Nebenschluss1(Br = 0.05) annotation(
-        Placement(visible = true, transformation(origin = {62.7273, -17.4545}, extent = {{-20.7273, -15.5455}, {36.2727, 15.5455}}, rotation = 0)));
       Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Motorsteuerung motorsteuerung1(S1 = 1, S2 = 0, S3 = 2, S4 = 0) annotation(
         Placement(visible = true, transformation(origin = {40, -18}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+  Modelica_Gruppe_3_Flaschenzug.Antriebsstrang.Fremderregte_Gleichstrommaschine fremderregte_Gleichstrommaschine1(Br = 0.05)  annotation(
+        Placement(visible = true, transformation(origin = {66.5352, -5.90141}, extent = {{-14.5352, -10.9014}, {25.4366, 10.9014}}, rotation = 0)));
     equation
+      connect(decke1.port_Decke, seil1.Seil_oben) annotation(
+        Line(points = {{-42, 82}, {-62, 82}, {-62, 12}, {-62, 12}}));
+      connect(fremderregte_Gleichstrommaschine1.GM_Wellenende, getriebe1.Getriebe_Input) annotation(
+        Line(points = {{90, -6}, {98, -6}, {98, 24}, {94, 24}, {94, 24}}));
+      connect(motorsteuerung1.MS_Vorgaben, fremderregte_Gleichstrommaschine1.MS_Vorgaben) annotation(
+        Line(points = {{50, -6}, {50, -6}, {50, 12}, {64, 12}, {64, 2}, {62, 2}}));
       connect(masse1.port_Masse, rolle2.Rolle_Lagerung) annotation(
         Line(points = {{-22, -73}, {8, -73}, {8, -50}}));
       connect(masse1.port_Masse, rolle1.Rolle_Lagerung) annotation(
         Line(points = {{-22, -73}, {-50, -73}, {-50, -50}}));
-      connect(seil1.Seil_oben, decke1.port_Decke) annotation(
-        Line(points = {{-61.6, 11.2}, {-61.6, 19.7}, {-41, 19.7}, {-41, 82.5}}));
       connect(decke1.port_Decke, rolle3.Rolle_Lagerung) annotation(
         Line(points = {{-41, 82.5}, {-22, 82.5}, {-22, 18}}));
-      connect(gM_Nebenschluss1.MS_Vorgaben, motorsteuerung1.MS_Vorgaben) annotation(
-        Line(points = {{58, -6}, {58, -6}, {58, 2}, {46, 2}, {46, -8}, {46, -8}}));
-      connect(gM_Nebenschluss1.GM_Wellenende, getriebe1.Getriebe_Input) annotation(
-        Line(points = {{96, -18}, {94, -18}, {94, 24}, {94, 24}}));
       connect(getriebe1.Getriebe_Output, seilwinde1.Seilwinde_rotatorisch) annotation(
         Line(points = {{60, 34}, {56, 34}, {56, 34}, {56, 34}}));
       connect(seilwinde1.Seilwinde_translatorisch, seil4.Seil_oben) annotation(
@@ -3869,7 +3871,8 @@ des Getriebes parametriert werden. Der Standardwert des Wirkungsgrads ist 1
         Line(points = {{-60.5857, -50.1857}, {-61.5857, -50.1857}, {-61.5857, -50.1857}, {-62.5857, -50.1857}, {-62.5857, -44.1857}, {-62.5857, -44.1857}, {-62.5857, -44.1857}, {-62.5857, -44.1857}}));
       annotation(
         Icon(graphics = {Ellipse(fillColor = {120, 120, 120}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-80, 80}, {80, -80}}, endAngle = 360), Polygon(origin = {10, -2}, fillColor = {22, 98, 16}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{-46, 50}, {-46, -50}, {46, 0}, {-46, 50}})}),
-        Documentation(info = "<html><head></head><body><font size=\"6\"><b>Der Faktorenflaschenzug mit Zugrichtungsänderung</b></font><div><br></div><div>Durch die Änderung der Zugrichtung entgegen der Gewichtskraft, führt zu einer entgegengesetzten (aufwärtsgerichteten) Zugkraft. Diese errechnet sich aus der Gwichtskraft <b>F<sub>l</sub></b> dividiert durch die Anzahl der tragenden Seilstränge <b>n</b><sub><b>tragend</b>.</sub></div><div><sub><br></sub></div><div style=\"text-align: center;\"><b><font size=\"4\">F<sub>z</sub> = </font><font size=\"4\"><sup>F<sub>l</sub></sup>&nbsp;</font><font size=\"4\">/ <sub>n<sub>tragend</sub></sub></b></div><div style=\"text-align: center;\"><sub><br></sub></div><div style=\"text-align: left;\">Das zu erwartende Wegeverhältnis beträgt 4:1 (vgl Formel),</div><div style=\"text-align: left;\"><sub><br></sub></div><div style=\"text-align: center;\"><b><font size=\"4\">S = h · 2<sup>n</sup></font></b></div><div style=\"text-align: center;\"><sup><br></sup></div><div style=\"text-align: left;\">sprich die Masse wird lediglich um 1/4 der Motorbewegung Richtung Decke bewegt.</div></body></html>"));
+        Documentation(info = "<html><head></head><body><font size=\"6\"><b>Der Faktorenflaschenzug mit Zugrichtungsänderung</b></font><div><br></div><div>Durch die Änderung der Zugrichtung entgegen der Gewichtskraft, führt zu einer entgegengesetzten (aufwärtsgerichteten) Zugkraft. Diese errechnet sich aus der Gwichtskraft <b>F<sub>l</sub></b> dividiert durch die Anzahl der tragenden Seilstränge <b>n</b><sub><b>tragend</b>.</sub></div><div><sub><br></sub></div><div style=\"text-align: center;\"><b><font size=\"4\">F<sub>z</sub> = </font><font size=\"4\"><sup>F<sub>l</sub></sup>&nbsp;</font><font size=\"4\">/ <sub>n<sub>tragend</sub></sub></b></div><div style=\"text-align: center;\"><sub><br></sub></div><div style=\"text-align: left;\">Das zu erwartende Wegeverhältnis beträgt 4:1 (vgl Formel),</div><div style=\"text-align: left;\"><sub><br></sub></div><div style=\"text-align: center;\"><b><font size=\"4\">S = h · 2<sup>n</sup></font></b></div><div style=\"text-align: center;\"><sup><br></sup></div><div style=\"text-align: left;\">sprich die Masse wird lediglich um 1/4 der Motorbewegung Richtung Decke bewegt.</div></body></html>"),
+  experiment(StartTime = 0, StopTime = 25, Tolerance = 1e-6, Interval = 0.005));
     end Faktorenflaschenzug_Zugrichtung_oben;
     annotation(
       Icon(graphics = {Ellipse(fillColor = {120, 120, 120}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-80, 80}, {80, -80}}, endAngle = 360), Polygon(origin = {10, -2}, fillColor = {22, 98, 16}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{-46, 50}, {-46, -50}, {46, 0}, {-46, 50}})}));
